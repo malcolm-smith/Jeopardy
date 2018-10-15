@@ -16,27 +16,29 @@ public class Question {
 	private File file;
 	private int questionNumber;
 	private JButton button = new JButton();
-	
+
 	private String question;
 	private String answer;
 	private int money;
-	
+
 	private Font font = new Font("SansSerif Bold", Font.PLAIN, 50);
-	
+
 	private ActionListener a = (new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String response = JOptionPane.showInputDialog(question);
 			if (response.toUpperCase().equals(answer)) {
 				JOptionPane.showMessageDialog(null, "CORRECT", "CORRECT", JOptionPane.PLAIN_MESSAGE);
+				Game.score += money;
+				JOptionPane.showMessageDialog(null, "SCORE: " + Game.score, "SCORE", JOptionPane.PLAIN_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(null, "INCORRECT", "INCORRECT", JOptionPane.ERROR_MESSAGE);
 			}
-			((JButton)(e.getSource())).setText(null);
-			((JButton)(e.getSource())).setEnabled(false);
+			((JButton) (e.getSource())).setText(null);
+			((JButton) (e.getSource())).setEnabled(false);
 		}
 	});
-	
+
 	public Question(File f, int i) {
 		file = f;
 		questionNumber = i;
@@ -48,7 +50,7 @@ public class Question {
 		button.setBorder(Category.border);
 		button.addActionListener(a);
 	}
-	
+
 	private void loadQuestion(File f) {
 		try {
 			Scanner in = new Scanner(f);
@@ -67,8 +69,8 @@ public class Question {
 			System.exit(0);
 		}
 	}
-	
-	//setters and getters
+
+	// setters and getters
 	public JButton getButton() {
 		return button;
 	}
