@@ -12,7 +12,7 @@ public class Game {
 
 	private final int catNumber = 6;
 
-	private JPanel panel = new JPanel();
+	private static JPanel panel = new JPanel();
 	private Category categories[] = new Category[catNumber];
 
 	public Game() {
@@ -24,7 +24,7 @@ public class Game {
 
 		// randomize order of categories
 		ArrayList<Integer> list = new ArrayList<Integer>(); // create list of numbers 1 to 6
-		for (int i = 1; i <= categories.length; i++) {
+		for (int i = 1; i <= 6; i++) {
 			list.add(new Integer(i));
 		}
 		Collections.shuffle(list); // shuffle the list into a random order
@@ -38,7 +38,7 @@ public class Game {
 	}
 
 	// setters and getters
-	public JPanel getPanel() {
+	public static JPanel getPanel() {
 		return panel;
 	}
 }

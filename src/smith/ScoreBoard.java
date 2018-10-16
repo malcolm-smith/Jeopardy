@@ -12,7 +12,7 @@ public class ScoreBoard {
 	
 	private static int playerNumber = 0;
 	
-	private int scores[];
+	private static int scores[];
 	private JLabel labelScores[];
 	
 	private Font font = new Font("SansSerif Bold", Font.PLAIN, 20);
@@ -34,6 +34,14 @@ public class ScoreBoard {
 			labelScores[i].setFont(font);
 			panel.add(labelScores[i]);
 		}
+	}
+	
+	public static void setScore(int index, int money) {
+		scores[index] = scores[index] += money;
+	}
+	
+	public int getScore(int index) {
+		return scores[index];
 	}
 	
 	public JPanel getPanel() {

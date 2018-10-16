@@ -1,27 +1,43 @@
 package smith;
 
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
 public class Main {
-	private static Game game;
+	private static Game game = new Game();
 	
-	private static ScoreBoard score;
+	private static ScoreBoard score = new ScoreBoard(3);
 
-	private static JFrame frame = new JFrame();
+	public static JFrame frame = new JFrame();
 
 	private static JSplitPane s = new JSplitPane();
 	
+	public static Main main = new Main();
+	
+	private KeyListener k = (new KeyAdapter() {
+		public void keyPressed(KeyEvent e) {
+			int answerer = 0;
+			String f = KeyEvent.getKeyText(e.getKeyCode()).toUpperCase();
+			System.out.println(f);
+			if (f.equals("E")) {
+				answerer = 1;
+			} else if (f.equals("P")) {
+				answerer = 2;
+			}
+			//Question.getAnswer(answerer);0
+			frame.removeAll();
+			main.addGame();
+		}
+	});
+	
 	public static void main(String args[]) {
-		game = new Game();
-		score = new ScoreBoard(3);
-		Main main = new Main();
 		main.initGUI();
-		s.add(game.getPanel());
-		s.add(score.getPanel());
-		main.refresh();
+		main.addGame();
 	}
 
 	public void initGUI() {
@@ -36,7 +52,13 @@ public class Main {
 		frame.setVisible(true);
 	}
 	
-	public void refresh() {
+	public void addGame() {
+		s.add(game.getPanel());
+		s.add(score.getPanel());
+		main.refresh();
+	}
+	
+	public static void refresh() {
 		frame.revalidate();
 		frame.repaint();
 	}
