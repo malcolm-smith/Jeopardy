@@ -1,11 +1,10 @@
 package smith;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -13,13 +12,14 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class Question {
 	private File file;
 	private int questionNumber;
+	private int categoryNumber;
 	private JButton button = new JButton();
-	private JLabel display = new JLabel();
+	private static JLabel display = new JLabel();
 
 	private String question;
 	private String answer;
@@ -45,9 +45,13 @@ public class Question {
 		}
 	});
 
-	public Question(File f, int i) {
+	public Question(File f, int num, int num2) {
 		file = f;
-		questionNumber = i;
+		questionNumber = num;
+		categoryNumber = num2;
+		
+//		System.out.println(questionNumber + " " + categoryNumber);
+		
 		loadQuestion(file);
 		button.setText("$" + Integer.toString(money));
 		button.setBackground(Color.BLUE);
@@ -57,6 +61,7 @@ public class Question {
 		button.addActionListener(a);
 	}
 
+	@SuppressWarnings("resource")
 	private void loadQuestion(File f) {
 		try {
 			Scanner in = new Scanner(f);
@@ -77,17 +82,21 @@ public class Question {
 	}
 
 	private void displayQuestion() {
-		Main.frame.removeAll();
-		display = new JLabel(question);
-		display.setOpaque(true);
-		display.setBackground(Color.BLUE);
-		display.setForeground(Color.WHITE);
-		display.setFont(new Font("SansSerif Bold", Font.PLAIN, 100));
-		
-		Game.getPanel().add(display);
-		Main.refresh();
+		Main.main.r();
+		Question.display = new JLabel(question, SwingConstants.CENTER);
+		Question.display.setOpaque(true);
+		Question.display.setBackground(Color.BLUE);
+		Question.display.setForeground(Color.WHITE);
+		Question.display.setFont(new Font("SansSerif Bold", Font.PLAIN, 50));
+		Main.main.getFrame().addKeyListener(Main.main.getK());
+		Main.main.getFrame().add(Question.display);
+		Main.main.getFrame().requestFocus();
+		Main.main.getFrame().revalidate();
+		Main.main.getFrame().repaint();
+		Main.main.setN1(categoryNumber);
+		Main.main.setN2(questionNumber);
 	}
-	
+
 	public void getAnswer(int playerNumber) {
 		String response = JOptionPane.showInputDialog(question);
 		if (response.toUpperCase().equals(answer)) {
@@ -99,9 +108,13 @@ public class Question {
 		}
 		JOptionPane.showMessageDialog(null, "SCORE: " + Game.score, "SCORE", JOptionPane.PLAIN_MESSAGE);
 	}
-	
+
 	// setters and getters
 	public JButton getButton() {
 		return button;
+	}
+
+	public Component getDisplay() {
+		return display;
 	}
 }

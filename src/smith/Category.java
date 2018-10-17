@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -23,8 +21,11 @@ public class Category {
 
 	private JPanel panel = new JPanel();
 	private JLabel catName = new JLabel(name, SwingConstants.CENTER);
+	
+	private int catNumber;
 
-	public Category(File f) {
+	public Category(File f, int i) {
+		catNumber = i;
 		createCategory(f);
 	}
 
@@ -42,16 +43,21 @@ public class Category {
 			name = in.nextLine().toUpperCase();
 			System.out.println("CATEGORY : " + name);
 			catName.setText(name);
+			in.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		for (int i = 0; i < questionNumber; i++) {
-			arr[i] = new Question(f, i);
+			arr[i] = new Question(f, i, catNumber);
 			panel.add(arr[i].getButton());
 		}
 	}
 
 	public JPanel getPanel() {
 		return panel;
+	}
+	
+	public Question getArr(int n) {
+		return arr[n];
 	}
 }

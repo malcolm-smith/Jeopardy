@@ -30,7 +30,7 @@ public class Game {
 		Collections.shuffle(list); // shuffle the list into a random order
 
 		for (int i = 0; i < categories.length; i++) {
-			categories[i] = new Category(new File("./src/files/questions/" + list.get(i)));
+			categories[i] = new Category(new File("./src/files/questions/" + list.get(i)), list.get(i));
 			panel.add(categories[i].getPanel());
 		}
 
@@ -38,7 +38,15 @@ public class Game {
 	}
 
 	// setters and getters
-	public static JPanel getPanel() {
+	public JPanel getPanel() {
 		return panel;
+	}
+
+	public Category getCategories(int n) {
+		return categories[n];
+	}
+
+	public void setCategories(Category categories[]) {
+		this.categories = categories;
 	}
 }
