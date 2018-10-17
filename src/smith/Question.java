@@ -26,16 +26,25 @@ public class Question {
 	private ActionListener a = (new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String response = JOptionPane.showInputDialog(question);
-			if (response.toUpperCase().equals(answer)) {
-				JOptionPane.showMessageDialog(null, "CORRECT", "CORRECT", JOptionPane.PLAIN_MESSAGE);
-				Game.score += money;
-				JOptionPane.showMessageDialog(null, "SCORE: " + Game.score, "SCORE", JOptionPane.PLAIN_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(null, "INCORRECT", "INCORRECT", JOptionPane.ERROR_MESSAGE);
-			}
+//			Main.display.addKeyListener(Main.k);
+//			Main.display.isFocusable();
+//			Main.display.requestFocus();
+			Main.s.setVisible(false);
+			Main.display.setVisible(true);
+			Main.display.requestFocus();
+//			String response = JOptionPane.showInputDialog(question);
+//			if (response.toUpperCase().equals(answer)) {
+//				JOptionPane.showMessageDialog(null, "CORRECT", "CORRECT", JOptionPane.PLAIN_MESSAGE);
+//				Game.score += money;
+//				JOptionPane.showMessageDialog(null, "SCORE: " + Game.score, "SCORE", JOptionPane.PLAIN_MESSAGE);
+//			} else {
+//				JOptionPane.showMessageDialog(null, "INCORRECT", "INCORRECT", JOptionPane.ERROR_MESSAGE);
+//			}
 			((JButton) (e.getSource())).setText(null);
 			((JButton) (e.getSource())).setEnabled(false);
+//			Main.display.setVisible(false);
+//			Main.display.removeKeyListener(Main.k);
+//			Main.s.setVisible(true);
 		}
 	});
 

@@ -1,8 +1,14 @@
 package smith;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JSplitPane;
 
 public class Main {
@@ -11,8 +17,22 @@ public class Main {
 	private static ScoreBoard score;
 
 	private static JFrame frame = new JFrame();
+	
+	public static JLabel display = new JLabel();
 
-	private static JSplitPane s = new JSplitPane();
+	public static JLayeredPane pane = new JLayeredPane();
+	public static JSplitPane s = new JSplitPane();
+	
+	public static KeyListener k = (new KeyAdapter() {
+		public void keyPressed(KeyEvent e) {
+			System.out.println("pressed");
+			display.setBackground(Color.RED);
+			display.setText("QWBEFUIQWBUB");
+			display.setOpaque(true);
+			frame.revalidate();
+			frame.repaint();
+		}
+	});
 	
 	public static void main(String args[]) {
 		game = new Game();
@@ -32,7 +52,14 @@ public class Main {
 		frame.setSize(1000, 1000);
 		frame.setLocationRelativeTo(null);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.add(s);
+		display.setBackground(Color.RED);
+		display.addKeyListener(k);
+		display.isFocusable();
+		pane.setLayout(new BorderLayout());
+		//pane.add(display);
+		pane.add(s);
+		pane.setLayer(s, 1);
+		frame.add(pane);
 		frame.setVisible(true);
 	}
 	
