@@ -26,14 +26,12 @@ public class Question {
 	private ActionListener a = (new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String response = JOptionPane.showInputDialog(question);
-			if (response.toUpperCase().equals(answer)) {
-				JOptionPane.showMessageDialog(null, "CORRECT", "CORRECT", JOptionPane.PLAIN_MESSAGE);
-				Game.score += money;
-				JOptionPane.showMessageDialog(null, "SCORE: " + Game.score, "SCORE", JOptionPane.PLAIN_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(null, "INCORRECT", "INCORRECT", JOptionPane.ERROR_MESSAGE);
-			}
+			Main.selectedQuestion = getQuestion();
+			Main.pane.setLayer(Main.display, 2);
+			Main.pane.setLayer(Main.s, 1);
+			Main.display.setText(question);
+			Main.frame.addKeyListener(Main.k);
+			Main.frame.requestFocus();
 			((JButton) (e.getSource())).setText(null);
 			((JButton) (e.getSource())).setEnabled(false);
 		}
@@ -69,7 +67,30 @@ public class Question {
 			System.exit(0);
 		}
 	}
+	
+	public boolean isCorrect(Question q, String response) {
+		if (q.answer.equals(response)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public Question getQuestion() {
+		return this;
+	}
+	
+	public String getString() {
+		return this.question;
+	}
 
+	public String getAnswer() {
+		return this.answer;
+	}
+	
+	public int getMoney() {
+		return this.money;
+	}
 	// setters and getters
 	public JButton getButton() {
 		return button;

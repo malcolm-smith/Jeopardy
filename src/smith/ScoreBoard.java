@@ -12,8 +12,8 @@ public class ScoreBoard {
 	
 	private static int playerNumber = 0;
 	
-	private int scores[];
-	private JLabel labelScores[];
+	public int scores[];
+	public JLabel labelScores[];
 	
 	private Font font = new Font("SansSerif Bold", Font.PLAIN, 20);
 	
