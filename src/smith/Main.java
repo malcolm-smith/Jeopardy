@@ -8,7 +8,14 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -28,12 +35,17 @@ public class Main {
 	public static JLayeredPane pane = new JLayeredPane();
 	public static JSplitPane s = new JSplitPane();
 	
+	public static Clip clip;
+	
 	public static Question selectedQuestion;
+	
+	public static int counter = 0;
 	
 	public static KeyListener k = (new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			// TODO: implement this as a method that accepts a player score object
 			if (e.getKeyText(e.getKeyCode()).equals("A")) {
+				//Main.clip.stop();
 				JOptionPane.showMessageDialog(null, "PLAYER 1");
 				if (JOptionPane.showInputDialog(selectedQuestion.getString()).toUpperCase().equals(selectedQuestion.getAnswer())) {
 					score.scores[0] += selectedQuestion.getMoney();
@@ -46,12 +58,35 @@ public class Main {
 					}
 					JOptionPane.showMessageDialog(null, "INCORRECT...");
 				}
-				JOptionPane.showMessageDialog(null, score.scores[0]);
+				//JOptionPane.showMessageDialog(null, score.scores[0]);
 				pane.setLayer(display, 1);
 				pane.setLayer(s, 2);
 				frame.removeKeyListener(k);
-			} else if (e.getKeyText(e.getKeyCode()).equals("B")) {
+				counter++;
+			} else if (e.getKeyText(e.getKeyCode()).equals("L")) {
 				// TODO: implement more methods and additional player scoring
+				JOptionPane.showMessageDialog(null, "PLAYER 2");
+				if (JOptionPane.showInputDialog(selectedQuestion.getString()).toUpperCase().equals(selectedQuestion.getAnswer())) {
+					score.scores[1] += selectedQuestion.getMoney();
+					score.labelScores[1].setText("Player 2: " + Integer.toString(score.scores[1]));
+					JOptionPane.showMessageDialog(null, "CORRECT!");
+				} else {
+					score.scores[1] -= selectedQuestion.getMoney();
+					if (score.scores[1] < 0) {
+						score.scores[1] = 0;
+					}
+					JOptionPane.showMessageDialog(null, "INCORRECT...");
+				}
+				//JOptionPane.showMessageDialog(null, score.scores[1]);
+				pane.setLayer(display, 1);
+				pane.setLayer(s, 2);
+				frame.removeKeyListener(k);
+				counter++;
+			}
+			if (counter == 30) {
+				JOptionPane.showMessageDialog(null, "GAME OVER");
+				// TODO: add winner'c circle feature
+				System.exit(0);
 			}
 		}
 	});
@@ -65,7 +100,21 @@ public class Main {
 		s.add(score.getPanel());
 		main.refresh();
 	}
-
+	
+	public static void playAudio() { //this method plays a sound
+		try {
+			AudioInputStream audioin = AudioSystem.getAudioInputStream(new File("./src/files/audio/Jeopardy-theme-song.wav")); //the audio file must be in .wav format
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioin);
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void initGUI() {
 		s = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		s.setOpaque(true);
@@ -82,7 +131,7 @@ public class Main {
 		display.setOpaque(true);
 		display.setBounds(0, 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 		display.setForeground(Color.WHITE);
-		display.setFont(new Font("Sanserif Bold", Font.BOLD, 50));
+		display.setFont(new Font("Sanserif Bold", Font.BOLD, 35));
 		
 		s.setBounds(0, 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 		
