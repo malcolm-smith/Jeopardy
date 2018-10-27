@@ -1,9 +1,7 @@
 package smith;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -44,45 +42,12 @@ public class Main {
 	public static KeyListener k = (new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			// TODO: implement this as a method that accepts a player score object
-			if (e.getKeyText(e.getKeyCode()).equals("A")) {
-				//Main.clip.stop();
-				JOptionPane.showMessageDialog(null, "PLAYER 1");
-				if (JOptionPane.showInputDialog(selectedQuestion.getString()).toUpperCase().equals(selectedQuestion.getAnswer())) {
-					score.scores[0] += selectedQuestion.getMoney();
-					score.labelScores[0].setText("Player 1: " + Integer.toString(score.scores[0]));
-					JOptionPane.showMessageDialog(null, "CORRECT!");
-				} else {
-					score.scores[0] -= selectedQuestion.getMoney();
-					if (score.scores[0] < 0) {
-						score.scores[0] = 0;
-					}
-					JOptionPane.showMessageDialog(null, "INCORRECT...");
-				}
-				//JOptionPane.showMessageDialog(null, score.scores[0]);
-				pane.setLayer(display, 1);
-				pane.setLayer(s, 2);
-				frame.removeKeyListener(k);
-				counter++;
-			} else if (e.getKeyText(e.getKeyCode()).equals("L")) {
-				// TODO: implement more methods and additional player scoring
-				JOptionPane.showMessageDialog(null, "PLAYER 2");
-				if (JOptionPane.showInputDialog(selectedQuestion.getString()).toUpperCase().equals(selectedQuestion.getAnswer())) {
-					score.scores[1] += selectedQuestion.getMoney();
-					score.labelScores[1].setText("Player 2: " + Integer.toString(score.scores[1]));
-					JOptionPane.showMessageDialog(null, "CORRECT!");
-				} else {
-					score.scores[1] -= selectedQuestion.getMoney();
-					if (score.scores[1] < 0) {
-						score.scores[1] = 0;
-					}
-					JOptionPane.showMessageDialog(null, "INCORRECT...");
-				}
-				//JOptionPane.showMessageDialog(null, score.scores[1]);
-				pane.setLayer(display, 1);
-				pane.setLayer(s, 2);
-				frame.removeKeyListener(k);
-				counter++;
-			}
+			int playerNum = Integer.parseInt(e.getKeyText(e.getKeyCode()));
+			score.labelScores[playerNum].setText("Player " + (playerNum + 1) + ": " + Integer.toString(selectedQuestion.checkResponse(score.scores[playerNum])));
+			pane.setLayer(display, 1);
+			pane.setLayer(s, 2);
+			frame.removeKeyListener(k);
+			counter++;
 			if (counter == 30) {
 				JOptionPane.showMessageDialog(null, "GAME OVER");
 				// TODO: add winner'c circle feature
@@ -92,6 +57,7 @@ public class Main {
 	});
 	
 	public static void main(String args[]) {
+		// TODO: add game setup feature, with player number selection, player names, etc.
 		game = new Game();
 		score = new ScoreBoard(3);
 		Main main = new Main();

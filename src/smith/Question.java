@@ -8,9 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class Question {
@@ -66,6 +64,18 @@ public class Question {
 			e.printStackTrace();
 			System.out.println("\n\nERROR: PROGRAM TERMINATED");
 			System.exit(0);
+		}
+	}
+	
+	public int checkResponse(int m) {
+		String response = JOptionPane.showInputDialog(question).toUpperCase();
+		if (response.equals(answer)) {
+			JOptionPane.showMessageDialog(null, "CORRECT!");
+			return m + this.money;
+		} else {
+			JOptionPane.showMessageDialog(null, "INCORRECT.");
+			JOptionPane.showMessageDialog(null, "THE CORRECT ANSWER IS: " + answer);
+			return m + (this.money * -1);
 		}
 	}
 	
