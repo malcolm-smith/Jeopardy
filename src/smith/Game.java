@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Game {
@@ -37,6 +38,10 @@ public class Game {
 		panel.setVisible(true);
 	}
 
+	public void setup() {
+		JOptionPane j = new JOptionPane();
+	}
+	
 	// setters and getters
 	public JPanel getPanel() {
 		return panel;

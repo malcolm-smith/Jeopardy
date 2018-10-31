@@ -34,6 +34,10 @@ public class Main {
 	public static JSplitPane s = new JSplitPane();
 	
 	public static Clip clip;
+	public static AudioInputStream themeSong;
+	public static AudioInputStream buzzer;
+	public static AudioInputStream correct;
+	public static AudioInputStream incorrect;
 	
 	public static Question selectedQuestion;
 	
@@ -41,42 +45,58 @@ public class Main {
 	
 	public static KeyListener k = (new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
-			// TODO: implement this as a method that accepts a player score object
-			int playerNum = Integer.parseInt(e.getKeyText(e.getKeyCode()));
-			score.labelScores[playerNum].setText("Player " + (playerNum + 1) + ": " + Integer.toString(selectedQuestion.checkResponse(score.scores[playerNum])));
-			pane.setLayer(display, 1);
-			pane.setLayer(s, 2);
-			frame.removeKeyListener(k);
-			counter++;
-			if (counter == 30) {
-				JOptionPane.showMessageDialog(null, "GAME OVER");
-				// TODO: add winner'c circle feature
-				System.exit(0);
-			}
+			try {
+				int playerNum = Integer.parseInt(e.getKeyText(e.getKeyCode()));
+				score.labelScores[playerNum].setText("Player " + (playerNum + 1) + ": " + Integer.toString(selectedQuestion.checkResponse(score.scores[playerNum])));
+				pane.setLayer(display, 1);
+				pane.setLayer(s, 2);
+				frame.removeKeyListener(k);
+				counter++;
+				if (counter == 30) {
+					JOptionPane.showMessageDialog(null, "GAME OVER");
+					// TODO: add winner'c circle feature
+					System.exit(0);
+				}
+			} catch (NumberFormatException ex) {}
 		}
 	});
 	
 	public static void main(String args[]) {
 		// TODO: add game setup feature, with player number selection, player names, etc.
 		game = new Game();
-		score = new ScoreBoard(3);
+		score = new ScoreBoard(2);
 		Main main = new Main();
 		main.initGUI();
+		main.initAudio();
 		s.add(game.getPanel());
 		s.add(score.getPanel());
 		main.refresh();
 	}
 	
-	public static void playAudio() { //this method plays a sound
+	public void initAudio() { //this method plays a sound
 		try {
-			AudioInputStream audioin = AudioSystem.getAudioInputStream(new File("./src/files/audio/Jeopardy-theme-song.wav")); //the audio file must be in .wav format
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioin);
+			themeSong = AudioSystem.getAudioInputStream(new File("./src/files/audio/Jeopardy-theme-song.wav")); //the audio file must be in .wav format
+			
+			clip = AudioSystem.getClip();
+			//clip.open(audioin);
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void playAudio(AudioInputStream audioin) {
+		try {
+			clip.open(audioin);
+			clip.start();
+			Thread.sleep(5000);
+			clip.stop();
+		} catch (LineUnavailableException | IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
