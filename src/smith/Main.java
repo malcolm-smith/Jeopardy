@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 
 public class Main {
 	private static Game game;
+	public static Main main;
 	
 	private static ScoreBoard score;
 
@@ -38,6 +39,7 @@ public class Main {
 	public static AudioInputStream buzzer;
 	public static AudioInputStream correct;
 	public static AudioInputStream incorrect;
+			
 	
 	public static Question selectedQuestion;
 	
@@ -47,15 +49,17 @@ public class Main {
 		public void keyPressed(KeyEvent e) {
 			try {
 				int playerNum = Integer.parseInt(e.getKeyText(e.getKeyCode()));
-				score.labelScores[playerNum].setText("Player " + (playerNum + 1) + ": " + Integer.toString(selectedQuestion.checkResponse(score.scores[playerNum])));
+				System.out.println(score.scores[playerNum]);
+				score.scores[playerNum] = selectedQuestion.checkResponse(score.scores[playerNum]);
+//				System.out.println(score.scores[playerNum]);
+				score.labelScores[playerNum].setText("Player " + (playerNum + 1) + ": $" + Integer.toString(score.scores[playerNum]));
 				pane.setLayer(display, 1);
 				pane.setLayer(s, 2);
 				frame.removeKeyListener(k);
 				counter++;
 				if (counter == 30) {
-					JOptionPane.showMessageDialog(null, "GAME OVER");
 					// TODO: add winner'c circle feature
-					System.exit(0);
+					gameOver();
 				}
 			} catch (NumberFormatException ex) {}
 		}
@@ -65,11 +69,9 @@ public class Main {
 		// TODO: add game setup feature, with player number selection, player names, etc.
 		game = new Game();
 		score = new ScoreBoard(2);
-		Main main = new Main();
+		main = new Main();
 		main.initGUI();
 		main.initAudio();
-		s.add(game.getPanel());
-		s.add(score.getPanel());
 		main.refresh();
 	}
 	
@@ -104,14 +106,15 @@ public class Main {
 	public void initGUI() {
 		s = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		s.setOpaque(true);
-		s.setOneTouchExpandable(true);
+		s.setOneTouchExpandable(false);
+		s.add(game.getPanel());
+		s.add(score.getPanel());
 		s.setDividerLocation(1750);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000, 1000);
 		frame.setLocationRelativeTo(null);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
-		
 		
 		display.setBackground(Color.BLUE);
 		display.setOpaque(true);
@@ -131,6 +134,12 @@ public class Main {
 		
 		frame.add(pane);
 		frame.setVisible(true);
+	}
+	
+	public static void gameOver() {
+		frame.setVisible(false);
+		JOptionPane.showMessageDialog(null, "GAME OVER");
+		System.exit(0);
 	}
 	
 	public void refresh() {
