@@ -7,21 +7,22 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ScoreBoard {
+public class ScoreBoard { // this class keeps track of the player's scores
 	private JPanel panel = new JPanel();
-	
+
 	private static int playerNumber = 0;
-	
-	public int scores[];
-	public JLabel labelScores[];
-	
+
+	public int scores[]; // array of Integers that holds the amount of money each player has
+	public JLabel labelScores[]; // JLabels containing the values of each player's score
+
 	private Font font = new Font("SansSerif Bold", Font.PLAIN, 20);
-	
+
+	// contructor; is called when a ScoreBoard instance is created
 	public ScoreBoard(int playerNumber) {
-		this.playerNumber = playerNumber;
+		this.playerNumber = playerNumber; // gets number of players in the game
 		createScoreBoard();
 	}
-	
+
 	private void createScoreBoard() {
 		scores = new int[playerNumber];
 		labelScores = new JLabel[playerNumber];
@@ -35,11 +36,13 @@ public class ScoreBoard {
 			panel.add(labelScores[i]);
 		}
 	}
-	
-	public void getHighestScore() {
-		
+
+	public void getHighestScore() { // used in the gameOver() method in the superclass
+
 	}
-	
+
+	// setters and getters
+
 	public JPanel getPanel() {
 		return panel;
 	}

@@ -22,15 +22,22 @@ public class Question {
 
 	private Font font = new Font("SansSerif Bold", Font.PLAIN, 50);
 
+	// each question contains a JButton which calls the methods inside of this ActionListener
 	private ActionListener a = (new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			Main.selectedQuestion = getQuestion();
+		public void actionPerformed(ActionEvent e) { // called after a question's JButton is pressed
+			Main.selectedQuestion = getQuestion(); // tells the game that this question was pressed by the user
+			// brings the display to the front of the frame
 			Main.pane.setLayer(Main.display, 2);
 			Main.pane.setLayer(Main.s, 1);
+			// displays the selected question to the audience/players via the display
 			Main.display.setText(question);
+			// enables the "buzzers" that each player will use
 			Main.frame.addKeyListener(Main.k);
+			// frame waits for key input
 			Main.frame.requestFocus();
+			
+			// erases the question after it is selected
 			((JButton) (e.getSource())).setText(null);
 			((JButton) (e.getSource())).setEnabled(false);
 		}
@@ -41,6 +48,7 @@ public class Question {
 		questionNumber = i;
 		loadQuestion(file);
 		button.setText("$" + Integer.toString(money));
+		// styling
 		button.setBackground(Color.BLUE);
 		button.setForeground(Color.YELLOW);
 		button.setFont(font);
@@ -52,22 +60,23 @@ public class Question {
 		try {
 			Scanner in = new Scanner(f);
 			in.nextLine();
-			for (int i = 0; i < questionNumber * 2; i++) {
+			for (int i = 0; i < questionNumber * 2; i++) { // finds the question content by skipping irrelevant lines
 				in.nextLine();
 			}
 			String line = in.nextLine();
 			answer = in.nextLine();
 			in = new Scanner(line);
-			money = in.nextInt() * 100;
-			question = line.substring(2);
+			money = in.nextInt() * 100; // gets what the question is worth from the file
+			question = line.substring(2); // gets the question itself from the file
 		} catch (FileNotFoundException e) {
+			// stops the program if no questions are found
 			e.printStackTrace();
 			System.out.println("\n\nERROR: PROGRAM TERMINATED");
 			System.exit(0);
 		}
 	}
 	
-	public int checkResponse(int m) {
+	public int checkResponse(int m) { // checks if what the player guessed is correct, and what money they win/lose
 		String response = JOptionPane.showInputDialog(question).toUpperCase();
 		if (response.equals(answer)) {
 			JOptionPane.showMessageDialog(null, "CORRECT!");
@@ -79,13 +88,7 @@ public class Question {
 		}
 	}
 	
-	public boolean isCorrect(Question q, String response) {
-		if (q.answer.equals(response)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// setters and getters
 	
 	public Question getQuestion() {
 		return this;
@@ -102,7 +105,6 @@ public class Question {
 	public int getMoney() {
 		return this.money;
 	}
-	// setters and getters
 	public JButton getButton() {
 		return button;
 	}
