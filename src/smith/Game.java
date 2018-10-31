@@ -23,7 +23,7 @@ public class Game {
 	private void initGUI() {
 		panel.setLayout(new GridLayout(1, catNumber));
 
-		// randomize order of categories
+		// randomize order of categories; and which categories will be used in the game
 		ArrayList<Integer> list = new ArrayList<Integer>(); // create list of numbers 1 to 6
 		for (int i = 1; i <= categories.length; i++) {
 			list.add(new Integer(i));
@@ -36,10 +36,6 @@ public class Game {
 		}
 
 		panel.setVisible(true);
-	}
-
-	public void setup() {
-		JOptionPane j = new JOptionPane();
 	}
 	
 	// setters and getters
