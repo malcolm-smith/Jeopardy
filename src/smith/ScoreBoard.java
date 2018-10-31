@@ -36,6 +36,10 @@ public class ScoreBoard {
 		}
 	}
 	
+	public void getHighestScore() {
+		
+	}
+	
 	public JPanel getPanel() {
 		return panel;
 	}
