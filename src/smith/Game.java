@@ -5,6 +5,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -17,6 +19,7 @@ public class Game {
 	private Category categories[] = new Category[catNumber];
 
 	public Game() {
+		setup();
 		initGUI();
 	}
 
@@ -36,6 +39,14 @@ public class Game {
 		}
 
 		panel.setVisible(true);
+	}
+	
+	private void setup() {
+		Object[] options = { 2, 3, 4 };
+		JComboBox optionList = new JComboBox(options);
+		optionList.setSelectedIndex(0);
+		JOptionPane.showMessageDialog(null, optionList, "NUMBER OF PLAYERS?", JOptionPane.QUESTION_MESSAGE);
+		Main.numberOfPlayers = (int)optionList.getSelectedItem();
 	}
 	
 	// setters and getters

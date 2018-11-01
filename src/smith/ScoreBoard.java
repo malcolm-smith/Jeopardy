@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class ScoreBoard { // this class keeps track of the player's scores
 	private JPanel panel = new JPanel();
 
-	private static int playerNumber = 0;
+	private int playerNumber = 0;
 
 	public int scores[]; // array of Integers that holds the amount of money each player has
 	public JLabel labelScores[]; // JLabels containing the values of each player's score
@@ -37,8 +37,16 @@ public class ScoreBoard { // this class keeps track of the player's scores
 		}
 	}
 
-	public void getHighestScore() { // used in the gameOver() method in the superclass
-
+	public int getHighestScore() { // used in the gameOver() method in the superclass
+		int temp = 0;
+		int p = 0;
+		for (int i = 0; i < scores.length; i++) {
+			if (scores[i] > temp) {
+				temp = scores[i];
+				p = i;
+			}
+		}
+		return p;
 	}
 
 	// setters and getters
