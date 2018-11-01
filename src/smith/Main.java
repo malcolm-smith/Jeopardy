@@ -50,19 +50,21 @@ public class Main {
 	// keeps track of how many questions have been opened; used to determine the end of the game
 	public static int counter = 0;
 	
+	// number of players in the game
+	public static int numberOfPlayers = 4;
+	
 	// called when a player's buzzer is pressed
 	public static KeyListener k = (new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			try {
 				int playerNum = Integer.parseInt(e.getKeyText(e.getKeyCode()));
-				score.scores[playerNum] = selectedQuestion.checkResponse(score.scores[playerNum]);
+				score.scores[playerNum - 1] = selectedQuestion.checkResponse(score.scores[playerNum - 1]);
 				score.labelScores[playerNum].setText("Player " + (playerNum + 1) + ": $" + Integer.toString(score.scores[playerNum]));
 				pane.setLayer(display, 1);
 				pane.setLayer(s, 2);
 				frame.removeKeyListener(k);
 				counter++;
 				if (counter == 30) {
-					// TODO: add winner'c circle feature
 					gameOver();
 				}
 			} catch (NumberFormatException ex) {}
@@ -72,7 +74,7 @@ public class Main {
 	public static void main(String args[]) {
 		// TODO: add game setup feature, with player number selection, player names, etc.
 		game = new Game();
-		score = new ScoreBoard(2);
+		score = new ScoreBoard(numberOfPlayers);
 		main = new Main();
 		main.initGUI();
 		main.initAudio();
@@ -145,6 +147,7 @@ public class Main {
 	
 	// this method is called when the game is over (no questions remaining)
 	public static void gameOver() {
+		JOptionPane.showMessageDialog(null, "PLAYER " + (score.getHighestScore() + 1) + " WINS!");
 		frame.setVisible(false);
 		JOptionPane.showMessageDialog(null, "GAME OVER");
 		System.exit(0);
