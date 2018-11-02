@@ -26,6 +26,8 @@ public class Question {
 	private ActionListener a = (new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) { // called after a question's JButton is pressed
+			Main.themeSongClip.setMicrosecondPosition(0);
+			Main.themeSongClip.start();
 			Main.selectedQuestion = getQuestion(); // tells the game that this question was pressed by the user
 			// brings the display to the front of the frame
 			Main.pane.setLayer(Main.display, 2);
@@ -79,9 +81,13 @@ public class Question {
 	public int checkResponse(int m) { // checks if what the player guessed is correct, and what money they win/lose
 		String response = JOptionPane.showInputDialog(question).toUpperCase();
 		if (response.equals(answer)) {
+			Main.correctClip.setMicrosecondPosition(0);
+			Main.correctClip.start();
 			JOptionPane.showMessageDialog(null, "CORRECT!");
 			return m + this.money;
 		} else {
+			Main.incorrectClip.setMicrosecondPosition(0);
+			Main.incorrectClip.start();
 			JOptionPane.showMessageDialog(null, "INCORRECT.");
 			JOptionPane.showMessageDialog(null, "THE CORRECT ANSWER IS: " + answer);
 			return m + (this.money * -1);
