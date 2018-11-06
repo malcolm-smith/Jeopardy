@@ -38,22 +38,14 @@ public class Main {
 	public static JSplitPane s = new JSplitPane();
 	
 	// audio
-<<<<<<< HEAD
-	public static Clip clip;
-	public static AudioInputStream themeSong;
-	public static AudioInputStream buzzer;
-	public static AudioInputStream correct;
-	public static AudioInputStream incorrect;
-=======
 	public static AudioInputStream themeSong;
 	public static Clip themeSongClip;
 	public static AudioInputStream buzzer;
 	public static Clip buzzerClip;
-	public static AudioInputStream correct;
+	public static AudioInputStream correct; 
 	public static Clip correctClip;
 	public static AudioInputStream incorrect;
 	public static Clip incorrectClip;
->>>>>>> parent of c299905... ?
 	
 	// holds the question selected by the user
 	public static Question selectedQuestion;
@@ -68,10 +60,6 @@ public class Main {
 	public static KeyListener k = (new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			try {
-<<<<<<< HEAD
-				int playerNum = Integer.parseInt(e.getKeyText(e.getKeyCode()));
-				score.scores[playerNum - 1] = selectedQuestion.checkResponse(score.scores[playerNum - 1]);
-=======
 				themeSongClip.stop();
 				buzzerClip.setMicrosecondPosition(0);
 				buzzerClip.start();
@@ -81,7 +69,6 @@ public class Main {
 				if (score.scores[playerNum] < 0) {
 					score.scores[playerNum] = 0;
 				}
->>>>>>> parent of c299905... ?
 				score.labelScores[playerNum].setText("Player " + (playerNum + 1) + ": $" + Integer.toString(score.scores[playerNum]));
 				pane.setLayer(display, 1);
 				pane.setLayer(s, 2);
@@ -104,13 +91,6 @@ public class Main {
 		main.refresh();
 	}
 	
-<<<<<<< HEAD
-	public void initAudio() { //this method plays a sound
-		try {
-			themeSong = AudioSystem.getAudioInputStream(new File("./src/files/audio/Jeopardy-theme-song.wav")); //the audio file must be in .wav format
-			
-			clip = AudioSystem.getClip();
-=======
 	public static void initAudio() { //this method plays a sound
 		try {
 			themeSong = AudioSystem.getAudioInputStream(new File("./src/files/audio/Jeopardy-theme-song.wav")); //the audio file must be in .wav format
@@ -127,7 +107,6 @@ public class Main {
 			correctClip.open(correct);
 			incorrectClip.open(incorrect);
 			
->>>>>>> parent of c299905... ?
 			//clip.open(audioin);
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -138,26 +117,12 @@ public class Main {
 		}
 	}
 	
-<<<<<<< HEAD
-	public void playAudio(AudioInputStream audioin) {
-		try {
-			clip.open(audioin);
-			clip.start();
-			Thread.sleep(5000);
-			clip.stop();
-		} catch (LineUnavailableException | IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-=======
 	public static void playAudio(Clip clip) {
 		clip.start();
 	}
 	
 	public static void stopAudio(Clip clip) {
 		clip.stop();
->>>>>>> parent of c299905... ?
 	}
 	
 	// initialize the graphical user interface
