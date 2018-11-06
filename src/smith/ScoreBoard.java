@@ -28,7 +28,7 @@ public class ScoreBoard { // this class keeps track of the player's scores
 		labelScores = new JLabel[playerNumber];
 		panel.setLayout(new GridLayout(playerNumber, 1));
 		for (int i = 0; i < playerNumber; i++) {
-			labelScores[i] = new JLabel("Player " + (i + 1) + ": $" + Integer.toString(scores[i]));
+			labelScores[i] = new JLabel("Player " + (i + 1) + ": " + Integer.toString(scores[i]));
 			labelScores[i].setOpaque(true);
 			labelScores[i].setBackground(Color.BLUE);
 			labelScores[i].setForeground(Color.YELLOW);
