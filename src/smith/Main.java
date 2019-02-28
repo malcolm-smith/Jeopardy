@@ -63,7 +63,7 @@ public class Main {
 				themeSongClip.stop();
 				buzzerClip.setMicrosecondPosition(0);
 				buzzerClip.start();
-				int playerNum = Integer.parseInt(e.getKeyText(e.getKeyCode()));
+				int playerNum = Integer.parseInt(KeyEvent.getKeyText(e.getKeyCode()));
 				JOptionPane.showMessageDialog(null, "Player " + (playerNum + 1));
 				score.scores[playerNum] = selectedQuestion.checkResponse(score.scores[playerNum]);
 				if (score.scores[playerNum] < 0) {
@@ -87,7 +87,7 @@ public class Main {
 		score = new ScoreBoard(numberOfPlayers);
 		main = new Main();
 		main.initGUI();
-		main.initAudio();
+		Main.initAudio();
 		main.refresh();
 	}
 	

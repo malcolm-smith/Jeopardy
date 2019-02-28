@@ -65,9 +65,11 @@ public class Question {
 			}
 			String line = in.nextLine();
 			answer = in.nextLine();
+			in.close();
 			in = new Scanner(line);
 			money = in.nextInt() * 100; // gets what the question is worth from the file
 			question = line.substring(2); // gets the question itself from the file
+			in.close();
 		} catch (FileNotFoundException e) {
 			// stops the program if no questions are found
 			e.printStackTrace();
